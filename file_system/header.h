@@ -5,6 +5,9 @@
 #include<conio.h>
 #include<sstream>
 #include<time.h>
+#include<windows.h>
+#include<shellapi.h>
+#include<stdio.h>
 
 using namespace std;
 
