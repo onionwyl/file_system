@@ -7,11 +7,83 @@ i_node index[128];
 vector<i_node_memory> i_node_mem;
 vector<cateLog> catelog;
 vector<disk_Index> disk_index;
-int a;
-int b;
-void asdf();
+vector<int> path;
+
+void init();
+void create_folder(string command);
+void change_path(string command);
+void show_folder(string  command);
+
 int main()
 {
-	asdf();
-	cout << b;
+	string username;
+	string password;
+	string command;
+	string subcommand;
+	char t;
+	init();
+	cout << "welcome to system" << endl;
+	cout << "please login" << endl;
+	while (1)
+	{
+		username = "";
+		password = "";
+		cout << "username:";
+		cin >> username;
+		cout << "password:";
+		while ((t = getch()) != '\r')
+		{
+			password += t;
+		}
+		if (username == "admin" && password == "admin")
+			break;
+		else
+			cout << endl << "username or password error" << endl;
+	}
+	system("cls");
+	getline(cin, command);
+	while (1)
+	{
+		cout << username << "@filesystem ";
+		if (path.size() == 1)
+			cout << "/";
+		else
+		{
+			for (auto p : path)
+			{
+				if (p == 0)
+					continue;
+				cout << "/" << catelog[p].info.name;
+			}
+		}
+		cout << endl << ">";
+		getline(cin, command);
+		stringstream command_stream(command);
+		command_stream >> subcommand;
+		if (subcommand == "cd")
+		{
+			change_path(command);
+		}
+		else if (subcommand == "ls")
+		{
+			show_folder(command);
+		}
+		else if (subcommand == "create")
+		{
+			
+		}
+		else if (subcommand == "mkdir")
+		{
+			create_folder(command);
+		}
+		else if (subcommand == "")
+		{
+
+		}
+		else
+		{
+			cout << "command not found" << endl;
+		}
+		cout << endl;
+	}
 }

@@ -2,6 +2,9 @@
 #include<string>
 #include<fstream>
 #include<vector>
+#include<conio.h>
+#include<sstream>
+#include<time.h>
 
 using namespace std;
 
