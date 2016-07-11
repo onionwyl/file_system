@@ -27,6 +27,12 @@
     <ClCompile Include="split.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="create_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="free_block.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">

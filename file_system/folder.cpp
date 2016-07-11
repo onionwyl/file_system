@@ -109,7 +109,7 @@ void show_folder(string  command)
 {
 	for (auto name : catelog[path.back()].addr.c_catelog)
 	{
-		cout << name.name <<" ";
+		cout << name.name << " ";
 	}
 	cout << endl;
 }

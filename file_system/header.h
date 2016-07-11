@@ -8,9 +8,9 @@
 
 using namespace std;
 
-#define BLOCKSIZ 512;
-#define DIRNUM 128;
-#define MAXBLK 512;
+#define BLOCKSIZ 512
+#define DIRNUM 128
+#define MAXBLK 512
 
 typedef struct{		//子文件目录
 	string name;
@@ -34,6 +34,7 @@ typedef struct{		//文件信息
 	int writeable;
 	int size;
 	int block;
+	vector<int> path;
 }information;
 
 typedef struct{		//文件目录

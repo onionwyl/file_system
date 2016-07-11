@@ -8,12 +8,12 @@ vector<i_node_memory> i_node_mem;
 vector<cateLog> catelog;
 vector<disk_Index> disk_index;
 vector<int> path;
-
+int free_i;	//¿ÕÏÐi½Úµã¿éºÅ
 void init();
 void create_folder(string command);
 void change_path(string command);
 void show_folder(string  command);
-
+void create(string command);
 int main()
 {
 	string username;
@@ -70,7 +70,7 @@ int main()
 		}
 		else if (subcommand == "create")
 		{
-			
+			create(command);
 		}
 		else if (subcommand == "mkdir")
 		{
