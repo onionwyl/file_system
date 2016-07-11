@@ -3,18 +3,18 @@
 extern vector<int> i_stack;		//空闲i节点,0号存大小
 extern vector<int> disk_stack;		//空闲磁盘块
 extern i_node index[128];
-extern int free_i;
 extern information file_info;
+extern int free_i;
 int ialloc()	//分配空闲i节点
 {
-	if (i_stack.size() == 128)
+	if (i_stack.size() == 0)
 	{
 		cout << "no more free blocks" << endl;
-		return 0;
+		return -1;
 	}
 	else
 	{
-		free_i = i_stack[i_stack.size() - 1];
+		free_i = i_stack[i_stack.back()];
 		i_stack.pop_back();
 		return free_i;
 	}

@@ -24,7 +24,7 @@ void create_folder(string command)
 	}
 	if (check_folder(path.back(), folder_name))
 	{
-		cout << "mkdir: Cannot create folder\"" << folder_name << "\":directory exists" << endl;
+		cout << "mkdir: Cannot create folder \"" << folder_name << "\":directory exists" << endl;
 		return;
 	}
 	new_information.name = folder_name;

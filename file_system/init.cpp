@@ -3,6 +3,7 @@
 extern vector<int> path;
 extern vector<cateLog> catelog;
 extern vector<int> disk_stack;
+extern vector<int> i_stack;
 
 void init()
 {
@@ -28,4 +29,8 @@ void init()
 	}
 	for (int i = 0; i < 100; i++)
 		disk_stack.push_back(i);
+	for (int i = 0; i < 128; i++)
+	{
+		i_stack.push_back(i);
+	}
 }
