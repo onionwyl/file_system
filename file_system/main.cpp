@@ -7,19 +7,26 @@ i_node index[128];
 vector<i_node_memory> i_node_mem;
 vector<cateLog> catelog;
 vector<disk_Index> disk_index;
+vector<INAMEindex> inameindex;   //i节点索引
+vector<IDATEindex> idateindex;
+vector<ITYPEindex> itypeindex;
 vector<int> path;
-int free_i;	//����i�ڵ���
+int free_i;	//¿ÕÏÐi½Úµã¿éºÅ
 void init();
 void create_folder(string command);
 void change_path(string command);
 void show_folder(string  command);
 void create(string command);
+void edit(string a);
+void search_file();
+
 int main()
 {
 	string username;
 	string password;
 	string command;
 	string subcommand;
+	string temp_path;
 	char t;
 	init();
 	cout << "welcome to system" << endl;
@@ -76,9 +83,13 @@ int main()
 		{
 			create_folder(command);
 		}
-		else if (subcommand == "")
+		else if (subcommand == "edit")
 		{
-
+            edit(command);
+		}
+		else if (subcommand == "search")
+		{
+            search_file();
 		}
 		else
 		{

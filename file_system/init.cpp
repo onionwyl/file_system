@@ -4,9 +4,12 @@ extern vector<int> path;
 extern vector<cateLog> catelog;
 extern vector<int> disk_stack;
 extern vector<int> i_stack;
-
+extern disk_block disk[10240];
 void init()
 {
+    for(int i=0;i<10240;i++){
+        disk[i].content="";
+    }
 
 	if (path.size() == 0)
 		path.push_back(0);
