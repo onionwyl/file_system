@@ -11,6 +11,8 @@ vector<INAMEindex> inameindex;   //i节点索引
 vector<IDATEindex> idateindex;
 vector<ITYPEindex> itypeindex;
 vector<int> path;
+vector<User> user;
+int username_id;
 int free_i;						//空闲i节点号
 void init();
 void create_folder(string command);
@@ -19,12 +21,21 @@ void show_folder(string  command);
 void create(string command);
 void delete_file(string command);
 void edit(string a);            //编辑
-void search_file();
+void search_file(string command);
+void open_file(string command);
+bool compare_arry(vector<int> a,vector<int> b);
+int find_block(string name);
+void close_file(string command);
 void save();
 
 int main()
 {
-	string username;
+    User new_user;                       //初始化用户信息
+    new_user.username="admin";
+    new_user.password="admin";
+    user.push_back(new_user);
+
+    string username;
 	string password;
 	string command;
 	string subcommand;
@@ -49,8 +60,9 @@ int main()
 			else
 				password += t;
 		}
-		if (username == "admin" && password == "admin")
-			break;
+		if (username == user[0].username && password == user[0].password){   //只有一个用户默认0，多个用户需要遍历
+            username_id=user[0].id;
+			break;}
 		else
 			cout << endl << "username or password error" << endl;
 	}
@@ -100,8 +112,16 @@ int main()
 		}
 		else if (subcommand == "search")
 		{
-            search_file();
+            search_file(command);
 		}
+		else if (subcommand == "open")
+        {
+            open_file(command);
+        }
+        else if (subcommand == "close")
+        {
+            close_file(command);
+        }
 		else
 		{
 			cout << "command not found" << endl;

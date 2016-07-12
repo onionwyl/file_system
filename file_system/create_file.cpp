@@ -132,9 +132,9 @@ void create(string command)
 		inameindex.push_back(new_inameindex);
 
 		IDATEindex new_idateindex;                      //建立日期索引
-		new_idateindex.id = free_i;
-		new_idateindex.date = index[free_i].info.create_time;
-		inameindex.push_back(new_inameindex);
+		new_idateindex.id=free_i;
+		new_idateindex.date=index[free_i].info.last_edit_time;
+		idateindex.push_back(new_idateindex);
 
 		ITYPEindex new_itypeindex;                      //建立类型索引
 		new_itypeindex.id = free_i;

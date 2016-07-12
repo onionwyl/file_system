@@ -11,6 +11,7 @@
 #include<math.h>
 #include<algorithm>
 #include<tchar.h>
+#include<cstdlib>
 
 using namespace std;
 
@@ -57,6 +58,7 @@ typedef struct{		//磁盘i节点
 typedef struct{		//内存i节点
 	information info;
 	vector<int> user;
+	int         id;//对应磁盘i节点的id
 }i_node_memory;
 
 typedef struct{		//磁盘块
@@ -79,3 +81,8 @@ typedef struct{
     string type;
     int    id;
 }ITYPEindex;
+typedef struct{
+    int    id;
+    string username;
+    string password;
+}User;

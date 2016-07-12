@@ -1,7 +1,7 @@
 #include"header.h"
 
 extern vector<cateLog> catelog;
-extern vector<disk_Index> disk_index;;
+extern vector<disk_Index> disk_index;
 extern vector<int> path;
 extern i_node index[128];
 void ifree(int block);
