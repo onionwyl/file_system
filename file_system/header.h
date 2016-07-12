@@ -31,6 +31,7 @@ typedef struct{		//文件目录中地址
 typedef struct{		//文件信息
 	string name;
 	int type;
+	string ftype;
 	int user;
 	string create_time;
 	string last_edit_time;
@@ -75,7 +76,5 @@ typedef struct{
 }IDATEindex;
 typedef struct{
     string type;
-    int    nameid;
-    int    dateid;
-    vector<int> node;
+    int    id;
 }ITYPEindex;

@@ -4,7 +4,7 @@ extern vector<cateLog> catelog;
 extern vector<int> path;
 extern i_node index[128];
 void ifree(int block);
-extern vector<int> disk_stack;;
+extern vector<int> disk_stack;
 void delete_file(string command){
 	stringstream command_stream(command);
 	string command1,name;

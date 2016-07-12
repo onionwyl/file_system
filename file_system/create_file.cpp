@@ -123,6 +123,16 @@ void create(string command)
 		new_inameindex.name=index[free_i].info.name;
 		inameindex.push_back(new_inameindex);
 
+		IDATEindex new_idateindex;                      //建立日期索引
+		new_idateindex.id=free_i;
+		new_idateindex.date=index[free_i].info.create_time;
+		inameindex.push_back(new_inameindex);
+
+        ITYPEindex new_itypeindex;                      //建立类型索引
+		new_itypeindex.id=free_i;
+		new_itypeindex.type=index[free_i].info.ftype;
+		itypeindex.push_back(new_itypeindex);
+
 		cateLog new_catelog;
 		new_catelog.id = catelog.size();
 		new_catelog.info = file_info;
@@ -134,8 +144,8 @@ void create(string command)
 		catelog[path.back()].addr.c_catelog.push_back(child_file);
 		disk_index.push_back(new_disk_index);		//磁盘索引内容增加
 
-		
-		
+
+
 	}
 
 }
