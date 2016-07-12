@@ -18,7 +18,7 @@ void change_path(string command);
 void show_folder(string  command);
 void create(string command);
 void delete_file(string command);
-void edit(string a);
+void edit(string a);            //编辑
 void search_file();
 
 int main()
