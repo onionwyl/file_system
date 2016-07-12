@@ -36,6 +36,15 @@
     <ClCompile Include="delete_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="save.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="edit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="search.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">

@@ -11,7 +11,7 @@ vector<INAMEindex> inameindex;   //i节点索引
 vector<IDATEindex> idateindex;
 vector<ITYPEindex> itypeindex;
 vector<int> path;
-int free_i;						//空闲i节点
+int free_i;						//空闲i节点号
 void init();
 void create_folder(string command);
 void change_path(string command);
@@ -20,6 +20,7 @@ void create(string command);
 void delete_file(string command);
 void edit(string a);            //编辑
 void search_file();
+void save();
 
 int main()
 {
@@ -101,5 +102,6 @@ int main()
 			cout << "command not found" << endl;
 		}
 		cout << endl;
+		save();
 	}
 }

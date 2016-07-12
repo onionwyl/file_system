@@ -10,8 +10,8 @@ void txt(){
     memset(&ShellInfo, 0, sizeof(ShellInfo));
     ShellInfo.cbSize = sizeof(ShellInfo);
     ShellInfo.hwnd = NULL;
-    ShellInfo.lpVerb = "open";
-    ShellInfo.lpFile ="temp.txt";
+    ShellInfo.lpVerb = _T("open");
+    ShellInfo.lpFile = _T("temp.txt");
     ShellInfo.nShow = SW_SHOWNORMAL;
     ShellInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
     ShellExecuteEx(&ShellInfo);

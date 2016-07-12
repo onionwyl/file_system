@@ -30,7 +30,7 @@ void init()
 		new_catlog.addr = new_addr;
 		catelog.push_back(new_catlog);
 	}
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 128; i++)
 		disk_stack.push_back(i);
 	for (int i = 0; i < 128; i++)
 	{

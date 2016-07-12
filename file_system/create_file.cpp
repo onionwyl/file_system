@@ -1,6 +1,4 @@
 #include "header.h"
-#include<time.h>
-#include<math.h>
 
 extern vector<cateLog> catelog;
 extern vector<int> disk_stack;		//©уоп╢еел©И
