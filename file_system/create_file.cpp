@@ -5,12 +5,11 @@ extern vector<int> disk_stack;		//空闲磁盘块
 extern i_node index[128];
 extern vector<int> path;
 extern vector<disk_Index> disk_index;
-extern address addr;
 extern vector<INAMEindex> inameindex;   //i节点索引
 extern vector<IDATEindex> idateindex;
 extern vector<ITYPEindex> itypeindex;
 extern vector<int> allocate(int size);
-int check_file(string fname,int path);
+int check_file(string fname, int path);
 int ialloc();
 extern int free_i;
 
@@ -23,7 +22,7 @@ void create(string command)
 	command_stream >> command1;
 	command_stream >> name;
 	command_stream >> size;
-	command_stream >> share ;
+	command_stream >> share;
 	int zhengsize = 0;
 
 	if (name == "")
@@ -34,7 +33,7 @@ void create(string command)
 	else
 	{
 		//判断重名
-		if(check_file(name, path.back()))
+		if (check_file(name, path.back()))
 			return;
 		//写入文件信息，磁盘i节点信息
 		file_info.name = name;
@@ -83,7 +82,7 @@ void create(string command)
 			file_info.readable = 0;
 			file_info.writeable = 0;
 		}
-		else if (share == "swr" || share == "srw")
+		else if (share == "swr" || share == "srw" || share == "")
 		{
 			file_info.share = 1;
 			file_info.readable = 1;
@@ -96,13 +95,6 @@ void create(string command)
 			file_info.readable = 1;
 			file_info.writeable = 0;
 		}
-		else if (share == "")
-		{
-			file_info.share = 0;
-			file_info.readable = 0;
-			file_info.writeable = 0;
-
-		}
 		else{
 			cout << "command is not exists" << endl;
 			return;
@@ -112,23 +104,41 @@ void create(string command)
 		{
 			return;
 		}
+		//判断文件类型 string ftype
+		int i;
+		for (i = name.size(); i > 0; i--)
+		{
+			if (name[i] == '.')
+			{
+				int j = i;
+				while (j < name.size() - 1)
+				{
+					file_info.ftype += file_info.name[++j];
+				}
+				break;
+			}
+		}
+		if (i == 0)
+			file_info.ftype = "file";
+		//cout << file_info.ftype << endl;
+
 		file_info.path = path;
 		file_info.block = disk_index.size();
 		index[free_i].info = file_info;
 
 		INAMEindex new_inameindex;                       //建立文件名索引
-		new_inameindex.id=free_i;
-		new_inameindex.name=index[free_i].info.name;
+		new_inameindex.id = free_i;
+		new_inameindex.name = index[free_i].info.name;
 		inameindex.push_back(new_inameindex);
 
 		IDATEindex new_idateindex;                      //建立日期索引
-		new_idateindex.id=free_i;
-		new_idateindex.date=index[free_i].info.create_time;
+		new_idateindex.id = free_i;
+		new_idateindex.date = index[free_i].info.create_time;
 		inameindex.push_back(new_inameindex);
 
-        ITYPEindex new_itypeindex;                      //建立类型索引
-		new_itypeindex.id=free_i;
-		new_itypeindex.type=index[free_i].info.ftype;
+		ITYPEindex new_itypeindex;                      //建立类型索引
+		new_itypeindex.id = free_i;
+		new_itypeindex.type = index[free_i].info.ftype;
 		itypeindex.push_back(new_itypeindex);
 
 		cateLog new_catelog;
@@ -152,7 +162,7 @@ void create(string command)
 vector<int> allocate(int size)
 {
 	vector<int> free_block;
-	int block_num = ceil(size / BLOCKSIZ );
+	int block_num = ceil(size / BLOCKSIZ);
 	if (disk_stack.size() < block_num)
 	{
 		cout << "no more free blocks" << endl;
