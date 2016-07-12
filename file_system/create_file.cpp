@@ -8,7 +8,10 @@ extern i_node index[128];
 extern vector<int> path;
 extern vector<disk_Index> disk_index;
 extern address addr;
-vector<int> allocate(int size);
+extern vector<INAMEindex> inameindex;   //i节点索引
+extern vector<IDATEindex> idateindex;
+extern vector<ITYPEindex> itypeindex;
+extern vector<int> allocate(int size);
 int check_file(string fname,int path);
 int ialloc();
 extern int free_i;
@@ -24,7 +27,7 @@ void create(string command)
 	command_stream >> size;
 	command_stream >> share ;
 	int zhengsize = 0;
-	
+
 	if (name == "")
 	{
 		cout << "Please input filename" << endl;
@@ -111,9 +114,15 @@ void create(string command)
 		{
 			return;
 		}
-		file_info.path.push_back(path[path.size() - 1]);
+		file_info.path = path;
 		file_info.block = disk_index.size();
 		index[free_i].info = file_info;
+
+		INAMEindex new_inameindex;                       //建立文件名索引
+		new_inameindex.id=free_i;
+		new_inameindex.name=index[free_i].info.name;
+		inameindex.push_back(new_inameindex);
+
 		cateLog new_catelog;
 		new_catelog.id = catelog.size();
 		new_catelog.info = file_info;

@@ -8,6 +8,8 @@
 #include<windows.h>
 #include<shellapi.h>
 #include<stdio.h>
+#include<math.h>
+#include<algorithm>
 
 using namespace std;
 
@@ -56,10 +58,24 @@ typedef struct{		//ÄÚ´æi½Úµã
 }i_node_memory;
 
 typedef struct{		//´ÅÅÌ¿é
-	char content[10000];
+	string content;
 }disk_block;
 
 typedef struct{		//´ÅÅÌ¿éË÷Òı
 	vector<int> block;
 }disk_Index;
 
+typedef struct{
+    string name;
+    int    id;
+}INAMEindex;
+typedef struct{
+    string date;
+    int    id;
+}IDATEindex;
+typedef struct{
+    string type;
+    int    nameid;
+    int    dateid;
+    vector<int> node;
+}ITYPEindex;
