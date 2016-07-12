@@ -29,11 +29,20 @@ void create_folder(string command)
 	}
 	new_information.name = folder_name;
 	new_information.type = 1;
+	new_information.ftype = "folder";
 	new_information.share = 1;
 	new_information.readable = 1;
 	new_information.writeable = 1;
 	new_information.user = 0;
+	new_information.size = 0;
+	new_information.block = -1;
+	char date[255];
+	time_t t = time(0);
+	strftime(date, 255, "%Y-%m-%d %H:%M:%S\n", localtime(&t));
+	new_information.create_time = date;
+	new_information.last_edit_time = date;
 	new_address.flag = 1;
+	new_address.i_node = -1;
 	new_catelog.id = catelog.size();
 	new_catelog.addr = new_address;
 	new_catelog.info = new_information;

@@ -42,7 +42,12 @@ int main()
 		cout << "password:";
 		while ((t = getch()) != '\r')
 		{
-			password += t;
+			if (t == '\b')
+			{
+				password = password.substr(0, password.length() - 1);
+			}
+			else
+				password += t;
 		}
 		if (username == "admin" && password == "admin")
 			break;

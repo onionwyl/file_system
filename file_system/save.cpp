@@ -29,14 +29,20 @@ void save()
 	f << endl;
 	for (i = 0; i < 128; i++)
 	{
-		f << index[i].info.name << " " << index[i].info.type << " " << index[i].info.user << " ";
-		f << index[i].info.create_time << " " << index[i].info.last_edit_time << " ";
-		f << index[i].info.share << " " << index[i].info.readable << " " << index[i].info.writeable << " ";
-		f << index[i].info.size << " " << index[i].info.block << endl;
-		f << index[i].info.path.size() << endl;
-		for (auto tmp : index[i].info.path)
+		if (index[i].info.name == "")
+			f << 0 << endl;
+		else
 		{
-			f << tmp << " ";
+			f << 1 << endl;
+			f << index[i].info.name << " " << index[i].info.type << " " << index[i].info.user << " ";
+			f << index[i].info.create_time << " " << index[i].info.last_edit_time << " ";
+			f << index[i].info.share << " " << index[i].info.readable << " " << index[i].info.writeable << " ";
+			f << index[i].info.size << " " << index[i].info.block << endl;
+			f << index[i].info.path.size() << endl;
+			for (auto tmp : index[i].info.path)
+			{
+				f << tmp << " ";
+			}
 		}
 		f << endl;
 	}
