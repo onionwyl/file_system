@@ -1,6 +1,6 @@
 #include "header.h"
 
-extern vector<cateLog> catelog;
+extern vector<cataLog> catalog;
 extern vector<int> disk_stack;		//空闲磁盘块
 extern i_node index[128];
 extern vector<int> path;
@@ -8,14 +8,14 @@ extern vector<disk_Index> disk_index;
 extern vector<INAMEindex> inameindex;   //i节点索引
 extern vector<IDATEindex> idateindex;
 extern vector<ITYPEindex> itypeindex;
-extern vector<int> allocate(int size);
+extern vector<int> allocata(int size);
 int check_file(string fname, int path);
 int ialloc();
 extern int free_i;
 
 void create(string command)
 {
-	child_catelog child_file;
+	child_catalog child_file;
 	information file_info;
 	stringstream command_stream(command);
 	string command1, name, size, share;
@@ -71,7 +71,7 @@ void create(string command)
 		}
 		file_info.size = zhengsize;
 		disk_Index new_disk_index;					//分配磁盘块
-		new_disk_index.block = allocate(file_info.size);
+		new_disk_index.block = allocata(file_info.size);
 		if (new_disk_index.block.size() == 0)
 		{
 			return;
@@ -105,12 +105,12 @@ void create(string command)
 			return;
 		}
 		//判断文件类型 string ftype
-		int i;
+		unsigned int i;
 		for (i = name.size(); i > 0; i--)
 		{
 			if (name[i] == '.')
 			{
-				int j = i;
+				unsigned int j = i;
 				while (j < name.size() - 1)
 				{
 					file_info.ftype += file_info.name[++j];
@@ -141,15 +141,15 @@ void create(string command)
 		new_itypeindex.type = index[free_i].info.ftype;
 		itypeindex.push_back(new_itypeindex);
 
-		cateLog new_catelog;
-		new_catelog.id = catelog.size();
-		new_catelog.info = file_info;
-		new_catelog.addr.flag = 0;
-		new_catelog.addr.i_node = free_i;
-		catelog.push_back(new_catelog);
-		child_file.id = new_catelog.id;
+		cataLog new_catalog;
+		new_catalog.id = catalog.size();
+		new_catalog.info = file_info;
+		new_catalog.addr.flag = 0;
+		new_catalog.addr.i_node = free_i;
+		catalog.push_back(new_catalog);
+		child_file.id = new_catalog.id;
 		child_file.name = name;
-		catelog[path.back()].addr.c_catelog.push_back(child_file);
+		catalog[path.back()].addr.c_catalog.push_back(child_file);
 		disk_index.push_back(new_disk_index);		//磁盘索引内容增加
 
 
@@ -159,10 +159,10 @@ void create(string command)
 }
 
 //分配空闲磁盘块
-vector<int> allocate(int size)
+vector<int> allocata(int size)
 {
 	vector<int> free_block;
-	int block_num = ceil(size / BLOCKSIZ);
+	unsigned int block_num = (unsigned int)ceil(size / BLOCKSIZ);
 	if (disk_stack.size() < block_num)
 	{
 		cout << "no more free blocks" << endl;
@@ -171,7 +171,7 @@ vector<int> allocate(int size)
 	else
 	{
 
-		for (int i = 0; i < block_num; i++)
+		for (unsigned int i = 0; i < block_num; i++)
 		{
 			free_block.push_back(disk_stack.back());
 			disk_stack.pop_back();
@@ -182,9 +182,9 @@ vector<int> allocate(int size)
 //检查重名
 int check_file(string fname, int path)
 {
-	for (auto file : catelog[path].addr.c_catelog)
+	for (auto file : catalog[path].addr.c_catalog)
 	{
-		if (fname == file.name && catelog[file.id].info.type == 0)
+		if (fname == file.name && catalog[file.id].info.type == 0)
 		{
 			cout << "create: Cannot create file \"" << fname << "\":file exists" << endl;
 			return file.id;

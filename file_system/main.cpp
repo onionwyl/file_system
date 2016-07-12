@@ -1,41 +1,40 @@
-#include "header.h"
-
+#include"header.h"
 vector<int> i_stack;
 vector<int> disk_stack;
 disk_block disk[10240];
 i_node index[128];
 vector<i_node_memory> i_node_mem;
-vector<cateLog> catelog;
+vector<cataLog> catalog;
 vector<disk_Index> disk_index;
-vector<INAMEindex> inameindex;   //ièŠ‚ç‚¹ç´¢å¼•
+vector<INAMEindex> inameindex;   //i½ÚµãË÷Òı
 vector<IDATEindex> idateindex;
 vector<ITYPEindex> itypeindex;
 vector<int> path;
 vector<User> user;
 int username_id;
-int free_i;						//ç©ºé—²ièŠ‚ç‚¹å·
+int free_i;						//¿ÕÏĞi½ÚµãºÅ
 void init();
 void create_folder(string command);
 void change_path(string command);
 void show_folder(string  command);
 void create(string command);
 void delete_file(string command);
-void edit(string a);            //ç¼–è¾‘
+void edit(string a);            //±à¼­
 void search_file(string command);
 void open_file(string command);
-bool compare_arry(vector<int> a,vector<int> b);
+bool compare_arry(vector<int> a, vector<int> b);
 int find_block(string name);
 void close_file(string command);
 void save();
 
 int main()
 {
-    User new_user;                       //åˆå§‹åŒ–ç”¨æˆ·ä¿¡æ¯
-    new_user.username="admin";
-    new_user.password="admin";
-    user.push_back(new_user);
+	User new_user;                       //³õÊ¼»¯ÓÃ»§ĞÅÏ¢
+	new_user.username = "admin";
+	new_user.password = "admin";
+	user.push_back(new_user);
 
-    string username;
+	string username;
 	string password;
 	string command;
 	string subcommand;
@@ -51,7 +50,7 @@ int main()
 		cout << "username:";
 		cin >> username;
 		cout << "password:";
-		while ((t = getch()) != '\r')
+		while ((t = _getch()) != '\r')
 		{
 			if (t == '\b')
 			{
@@ -60,9 +59,10 @@ int main()
 			else
 				password += t;
 		}
-		if (username == user[0].username && password == user[0].password){   //åªæœ‰ä¸€ä¸ªç”¨æˆ·é»˜è®¤0ï¼Œå¤šä¸ªç”¨æˆ·éœ€è¦éå†
-            username_id=user[0].id;
-			break;}
+		if (username == user[0].username && password == user[0].password){   //Ö»ÓĞÒ»¸öÓÃ»§Ä¬ÈÏ0,¶à¸öÓÃ»§ĞèÒª±éÀú
+			username_id = user[0].id;
+			break;
+		}
 		else
 			cout << endl << "username or password error" << endl;
 	}
@@ -79,7 +79,7 @@ int main()
 			{
 				if (p == 0)
 					continue;
-				cout << "/" << catelog[p].info.name;
+				cout << "/" << catalog[p].info.name;
 			}
 		}
 		cout << endl << ">";
@@ -108,20 +108,20 @@ int main()
 		}
 		else if (subcommand == "edit")
 		{
-            edit(command);
+			edit(command);
 		}
 		else if (subcommand == "search")
 		{
-            search_file(command);
+			search_file(command);
 		}
 		else if (subcommand == "open")
-        {
-            open_file(command);
-        }
-        else if (subcommand == "close")
-        {
-            close_file(command);
-        }
+		{
+			open_file(command);
+		}
+		else if (subcommand == "close")
+		{
+			close_file(command);
+		}
 		else
 		{
 			cout << "command not found" << endl;

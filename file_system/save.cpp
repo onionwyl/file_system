@@ -4,7 +4,7 @@ extern vector<int> i_stack;
 extern vector<int> disk_stack;
 extern disk_block disk[10240];
 extern i_node index[128];
-extern vector<cateLog> catelog;
+extern vector<cataLog> catalog;
 extern vector<disk_Index> disk_index;
 extern vector<INAMEindex> inameindex;   //i½ÚµãË÷Òý
 extern vector<IDATEindex> idateindex;
@@ -46,14 +46,14 @@ void save()
 		}
 		f << endl;
 	}
-	f << catelog.size() << endl;
-	for (auto tmp : catelog)
+	f << catalog.size() << endl;
+	for (auto tmp : catalog)
 	{
 		f << tmp.id << " ";
 		f << tmp.addr.flag << " ";
 		f << tmp.addr.i_node << " ";
-		f << tmp.addr.c_catelog.size() << endl;
-		for (auto tmp1 : tmp.addr.c_catelog)
+		f << tmp.addr.c_catalog.size() << endl;
+		for (auto tmp1 : tmp.addr.c_catalog)
 		{
 			f << tmp1.id << " " << tmp1.name << " ";
 		}

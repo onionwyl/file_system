@@ -3,7 +3,7 @@ extern vector<int> i_stack;		//空闲i节点,0号存大小
 extern vector<int> disk_stack;		//空闲磁盘块
 extern i_node index[128];
 extern information file_info;
-extern vector<cateLog> catelog;
+extern vector<cataLog> catalog;
 extern i_node index[128];
 extern vector<int> path;
 extern int free_i;
@@ -30,6 +30,5 @@ void ifree(int block)			//		回收空闲i节点
 	else
 	{
 		i_stack.push_back(block);
-	
 	}
 }

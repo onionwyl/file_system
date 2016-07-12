@@ -22,11 +22,11 @@ using namespace std;
 typedef struct{		//子文件目录
 	string name;
 	int id;
-}child_catelog;
+}child_catalog;
 
 typedef struct{		//文件目录中地址
 	int flag;
-	vector<child_catelog> c_catelog;
+	vector<child_catalog> c_catalog;
 	int i_node;
 }address;
 
@@ -49,7 +49,7 @@ typedef struct{		//文件目录
 	int id;
 	address addr;
 	information info;
-}cateLog;
+}cataLog;
 
 typedef struct{		//磁盘i节点
 	information info;

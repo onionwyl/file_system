@@ -43,7 +43,7 @@ void close_file(string command){
 	 string command1, name;
 	 command_stream >> command1;
 	 command_stream >> name;
-	 for(int i=0;i<i_node_mem.size();i++){
+	 for(unsigned int i=0;i<i_node_mem.size();i++){
         if(i_node_mem[i].id==find_block(name)){
         std::vector<i_node_memory>::iterator it = i_node_mem.begin()+i;
         i_node_mem.erase(it);

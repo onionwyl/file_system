@@ -1,7 +1,7 @@
 #include"header.h"
 
 extern vector<int> path;
-extern vector<cateLog> catelog;
+extern vector<cataLog> catalog;
 vector< string> split(string str, string pattern);
 
 int check_folder(int tmp_path_id, string folder);
@@ -10,8 +10,8 @@ void create_folder(string command)
 {
 	information new_information;
 	address new_address;
-	cateLog new_catelog;
-	child_catelog new_child;
+	cataLog new_catalog;
+	child_catalog new_child;
 	stringstream command_stream(command);
 	string subcommand, folder_name, share;
 	command_stream >> subcommand;
@@ -41,16 +41,17 @@ void create_folder(string command)
 	strftime(date, 255, "%Y-%m-%d %H:%M:%S\n", localtime(&t));
 	new_information.create_time = date;
 	new_information.last_edit_time = date;
+	new_information.path = path;
 	new_address.flag = 1;
 	new_address.i_node = -1;
-	new_catelog.id = catelog.size();
-	new_catelog.addr = new_address;
-	new_catelog.info = new_information;
-	catelog.push_back(new_catelog);
+	new_catalog.id = catalog.size();
+	new_catalog.addr = new_address;
+	new_catalog.info = new_information;
+	catalog.push_back(new_catalog);
 
 	new_child.name = folder_name;
-	new_child.id = new_catelog.id;
-	catelog[path.back()].addr.c_catelog.push_back(new_child);
+	new_child.id = new_catalog.id;
+	catalog[path.back()].addr.c_catalog.push_back(new_child);
 }
 
 void change_path(string command)
@@ -116,7 +117,7 @@ void change_path(string command)
 
 void show_folder(string  command)
 {
-	for (auto name : catelog[path.back()].addr.c_catelog)
+	for (auto name : catalog[path.back()].addr.c_catalog)
 	{
 		cout << name.name << " ";
 	}
@@ -125,9 +126,9 @@ void show_folder(string  command)
 
 int check_folder(int tmp_path_id, string folder)
 {
-	for (auto log : catelog[tmp_path_id].addr.c_catelog)
+	for (auto log : catalog[tmp_path_id].addr.c_catalog)
 	{
-		if (log.name == folder && catelog[log.id].info.type == 1)
+		if (log.name == folder && catalog[log.id].info.type == 1)
 			return log.id;
 	}
 	return 0;

@@ -83,6 +83,7 @@
     <ClCompile Include="free_block.cpp" />
     <ClCompile Include="init.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="open.cpp" />
     <ClCompile Include="save.cpp" />
     <ClCompile Include="search.cpp" />
     <ClCompile Include="split.cpp" />
