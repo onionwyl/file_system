@@ -14,6 +14,7 @@ void create_folder(string command);
 void change_path(string command);
 void show_folder(string  command);
 void create(string command);
+void delete_file(string command);
 int main()
 {
 	string username;
@@ -76,9 +77,9 @@ int main()
 		{
 			create_folder(command);
 		}
-		else if (subcommand == "")
+		else if (subcommand == "delete")
 		{
-
+			delete_file(command);
 		}
 		else
 		{

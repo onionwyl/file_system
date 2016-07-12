@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="create_file.cpp" />
+    <ClCompile Include="delete_file.cpp" />
     <ClCompile Include="folder.cpp" />
     <ClCompile Include="free_block.cpp" />
     <ClCompile Include="init.cpp" />

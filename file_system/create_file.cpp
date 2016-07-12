@@ -22,7 +22,7 @@ void create(string command)
 	command_stream >> command1;
 	command_stream >> name;
 	command_stream >> size;
-	command_stream >> share;
+	command_stream >> share ;
 	int zhengsize = 0;
 	
 	if (name == "")
@@ -38,9 +38,10 @@ void create(string command)
 		//写入文件信息，磁盘i节点信息
 		file_info.name = name;
 		file_info.type = 0;
-		time_t t;
-		time(&t);
-		file_info.create_time = ctime(&t);  //改成年月日时间
+		char date[255];
+		time_t t = time(0);
+		strftime(date, 255, "%Y-%m-%d %H:%M:%S\n", localtime(&t));
+		file_info.last_edit_time = file_info.create_time = date;
 		//cout << file_info.create_time << endl;
 		file_info.user = 0;
 		if (size == "")
@@ -69,7 +70,7 @@ void create(string command)
 			return;
 		}
 		file_info.size = zhengsize;
-		disk_Index new_disk_index;					//分配磁盘i节点
+		disk_Index new_disk_index;					//分配磁盘块
 		new_disk_index.block = allocate(file_info.size);
 		if (new_disk_index.block.size() == 0)
 		{
@@ -78,6 +79,8 @@ void create(string command)
 		if (share == "n")
 		{
 			file_info.share = 0;
+			file_info.readable = 0;
+			file_info.writeable = 0;
 		}
 		else if (share == "swr" || share == "srw")
 		{
@@ -95,6 +98,8 @@ void create(string command)
 		else if (share == "")
 		{
 			file_info.share = 0;
+			file_info.readable = 0;
+			file_info.writeable = 0;
 
 		}
 		else{
@@ -119,15 +124,18 @@ void create(string command)
 		child_file.name = name;
 		catelog[path.back()].addr.c_catelog.push_back(child_file);
 		disk_index.push_back(new_disk_index);		//磁盘索引内容增加
+
+		
+		
 	}
 
 }
 
+//分配空闲磁盘块
 vector<int> allocate(int size)
 {
-
 	vector<int> free_block;
-	int block_num = size / BLOCKSIZ + 1;
+	int block_num = ceil(size / BLOCKSIZ );
 	if (disk_stack.size() < block_num)
 	{
 		cout << "no more free blocks" << endl;
@@ -144,7 +152,7 @@ vector<int> allocate(int size)
 		return free_block;
 	}
 }
-
+//检查重名
 int check_file(string fname, int path)
 {
 	for (auto file : catelog[path].addr.c_catelog)

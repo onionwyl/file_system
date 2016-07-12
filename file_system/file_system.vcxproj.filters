@@ -33,6 +33,9 @@
     <ClCompile Include="free_block.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="delete_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
