@@ -52,7 +52,7 @@ void edit(string command){
 	string a = disk[disk_index[index[find_block(name)].info.block].block[0]].content;
 	ofstream fout;
 	fout.open("temp.txt");
-	fout << a << endl;
+	fout << a;
 	fout.close();                                     //将磁盘块内容写入temp.txt
 
 	txt();                                            //调用记事本
@@ -68,7 +68,7 @@ void edit(string command){
 
 	char date[255];
 	time_t t = time(0);
-	strftime(date, 255, "%Y-%m-%d %H:%M:%S\n", localtime(&t));
+	strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
 	index[find_block(name)].info.last_edit_time = date;  //修改最后编辑时间
 
 }

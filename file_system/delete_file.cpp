@@ -29,6 +29,7 @@ void delete_file(string command){
 			//¥≈≈ÃiΩ⁄µ„πÈ¡„
 			index[catalog[file.id].addr.i_node].info.name = "";
 			index[catalog[file.id].addr.i_node].info.type = -1;
+			index[catalog[file.id].addr.i_node].info.ftype = "";
 			index[catalog[file.id].addr.i_node].info.block = -1;
 			index[catalog[file.id].addr.i_node].info.create_time = "";
 			index[catalog[file.id].addr.i_node].info.last_edit_time = "";

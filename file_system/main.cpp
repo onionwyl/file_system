@@ -41,6 +41,7 @@ int main()
 	string temp_path;
 	char t;
 	init();
+	save();
 	cout << "welcome to system" << endl;
 	cout << "please login" << endl;
 	while (1)
@@ -86,7 +87,11 @@ int main()
 		getline(cin, command);
 		stringstream command_stream(command);
 		command_stream >> subcommand;
-		if (subcommand == "cd")
+		if (subcommand == "")
+		{
+
+		}
+		else if (subcommand == "cd")
 		{
 			change_path(command);
 		}
@@ -128,5 +133,7 @@ int main()
 		}
 		cout << endl;
 		save();
+		command = "";
+		subcommand = "";
 	}
 }

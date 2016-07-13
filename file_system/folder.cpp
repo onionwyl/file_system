@@ -38,7 +38,7 @@ void create_folder(string command)
 	new_information.block = -1;
 	char date[255];
 	time_t t = time(0);
-	strftime(date, 255, "%Y-%m-%d %H:%M:%S\n", localtime(&t));
+	strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
 	new_information.create_time = date;
 	new_information.last_edit_time = date;
 	new_information.path = path;

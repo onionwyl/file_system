@@ -34,7 +34,7 @@ void save()
 		else
 		{
 			f << 1 << endl;
-			f << index[i].info.name << " " << index[i].info.type << " " << index[i].info.user << " ";
+			f << index[i].info.name << " " << index[i].info.type << " " << index[i].info.ftype << " " << index[i].info.user << " ";
 			f << index[i].info.create_time << " " << index[i].info.last_edit_time << " ";
 			f << index[i].info.share << " " << index[i].info.readable << " " << index[i].info.writeable << " ";
 			f << index[i].info.size << " " << index[i].info.block << endl;
@@ -58,7 +58,7 @@ void save()
 			f << tmp1.id << " " << tmp1.name << " ";
 		}
 		f << endl;
-		f << tmp.info.name << " " << tmp.info.type << " " << tmp.info.user << " ";
+		f << tmp.info.name << " " << tmp.info.type << " " << tmp.info.ftype << " " << tmp.info.user << " ";
 		f << tmp.info.create_time << " " << tmp.info.last_edit_time << " ";
 		f << tmp.info.share << " " << tmp.info.readable << " " << tmp.info.writeable << " ";
 		f << tmp.info.size << " " << tmp.info.block << endl;
@@ -94,7 +94,7 @@ void save()
 	f << itypeindex.size() << endl;
 	for (auto tmp : itypeindex)
 	{
-		f << tmp.type << " " << tmp.id << " ";
+		f << tmp.id << " " << tmp.type << " ";
 	}
 	f << endl;
 	f.close();

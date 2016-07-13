@@ -40,7 +40,7 @@ void create(string command)
 		file_info.type = 0;
 		char date[255];
 		time_t t = time(0);
-		strftime(date, 255, "%Y-%m-%d %H:%M:%S\n", localtime(&t));
+		strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
 		file_info.last_edit_time = file_info.create_time = date;
 		//cout << file_info.create_time << endl;
 		file_info.user = 0;
