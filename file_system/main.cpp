@@ -30,6 +30,8 @@ void copy(string command);
 void move(string command);
 void rename(string name);
 void backstage();
+void l();
+void info();
 
 int main()
 {
@@ -49,7 +51,7 @@ int main()
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
 	cout << "welcome to system" << endl;
 	cout << "please login" << endl;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 	while (1)
 	{
 		username = "";
@@ -73,7 +75,7 @@ int main()
 		else{
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 			cout << endl << "username or password error" << endl;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
         }
 	}
 	system("cls");
@@ -84,7 +86,7 @@ int main()
 		cout << username;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN|FOREGROUND_RED);
 		cout << "@filesystem ";
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
 		if (path.size() == 1)
 			cout << "/";
 		else
@@ -96,6 +98,7 @@ int main()
 				cout << "/" << catalog[p].info.name;
 			}
 		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 		cout << endl << ">";
 		getline(cin, command);
 		stringstream command_stream(command);
@@ -151,11 +154,17 @@ int main()
 		else if (subcommand == "bs"){
             backstage();
 		}
+		else if (subcommand == "l"){
+            l();
+		}
+		else if (subcommand == "info"){
+            info();
+		}
 		else
 		{
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 			cout << "command not found" << endl;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 		}
 		cout << endl;
 		save();

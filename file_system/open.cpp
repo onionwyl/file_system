@@ -9,12 +9,20 @@ extern vector<cataLog> catalog;
 
 int find_block(string name);
 
+bool check(string name){
+     for(int i=0;i<i_node_mem.size();i++){
+        if(i_node_mem[i].info.name==name)
+            return false;
+     }
+     return true;
+}
+
 void open_file(string command){
     stringstream command_stream(command);
 	string command1, name;
 	command_stream >> command1;
 	command_stream >> name;
-    if(find_block(name)>=0){
+    if(find_block(name)>=0 && check(name)){
     i_node_memory new_i_node_mem;                      //建立日期索引
     new_i_node_mem.info.block=index[find_block(name)].info.block;
     new_i_node_mem.info.create_time=index[find_block(name)].info.create_time;
@@ -38,21 +46,16 @@ void open_file(string command){
 
     i_node_mem.push_back(new_i_node_mem);
 
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY);
-    cout<<"                                                                                "<<endl;
-    HANDLE hCON=GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hCON,(7%16)|(0%16*16));
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
     cout<<disk[disk_index[index[find_block(name)].info.block].block[0] ].content<<endl;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY);
-    cout<<"                                                                                "<<endl;
-     HANDLE bCON=GetStdHandle(STD_OUTPUT_HANDLE);
-     SetConsoleTextAttribute(bCON,(7%16)|(0%16*16));
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);//还原为原色}
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
      }
     else{
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-        cout << "not found!" << endl;
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+        cout << "file not found or already opened!" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
     }
 }
 
@@ -61,7 +64,7 @@ void close_file(string command){
 	 string command1, name;
 	 command_stream >> command1;
 	 command_stream >> name;
-	 if(find_block(name)>=0){
+	 if(find_block(name)>=0 && !check(name)){
 	 for(unsigned int i=0;i<i_node_mem.size();i++){
         if(i_node_mem[i].id==find_block(name)){
         std::vector<i_node_memory>::iterator it = i_node_mem.begin()+i;
@@ -71,19 +74,20 @@ void close_file(string command){
 	 }}
 	 else{
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-        cout << "not found!" << endl;
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+        cout << "file not exist or already closed" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 	 }
 
 }
 
 void backstage(){
     if(i_node_mem.size()>0){
-     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY);
+     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_RED);
      cout.setf(ios::left);
      cout<<setw(10)<<"name"<<setw(10)<<"type"<<setw(20)<<"open time"<<setw(20)<<"path"<<endl;
      HANDLE hCON=GetStdHandle(STD_OUTPUT_HANDLE);
      SetConsoleTextAttribute(hCON,(7%16)|(0%16*16));
+     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 
      for(unsigned int i=0;i<i_node_mem.size();i++){
          cout.setf(ios::left);
@@ -97,5 +101,5 @@ void backstage(){
     else{
          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
          cout << "no file open" << endl;
-         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);}
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);}
 }
