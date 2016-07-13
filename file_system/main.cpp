@@ -26,7 +26,8 @@ bool compare_arry(vector<int> a, vector<int> b);
 int find_block(string name);
 void close_file(string command);
 void save();
-
+void copy(string command);
+void move(string command);
 int main()
 {
 	User new_user;                       //初始化用户信息
@@ -126,6 +127,14 @@ int main()
 		else if (subcommand == "close")
 		{
 			close_file(command);
+		}
+		else if (subcommand == "cp")
+		{
+			copy(command);
+		}
+		else if (subcommand == "mv")
+		{
+			move(command);
 		}
 		else
 		{

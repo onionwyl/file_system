@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="copy_file.cpp" />
     <ClCompile Include="create_file.cpp" />
     <ClCompile Include="delete_file.cpp" />
     <ClCompile Include="edit.cpp" />

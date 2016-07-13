@@ -48,6 +48,9 @@
     <ClCompile Include="open.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="copy_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
