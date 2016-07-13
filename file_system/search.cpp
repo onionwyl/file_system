@@ -42,7 +42,7 @@ void dichotomy_name(int a, int b, string name){    //名字检索用到的二分法
 				for (unsigned int i = 0; i<answer.size(); i++){  //输出结果
 					cout << inameindex[answer[i]].name << " ";
 					transform_path(index[inameindex[i].id].info.path);
-					cout << " " << index[inameindex[i].id].info.last_edit_time << " ";
+					cout << " " <<index[inameindex[i].id].info.ftype<<" "<<index[inameindex[i].id].info.last_edit_time << " ";
 					cout << endl;
 				}
 				return;
@@ -58,14 +58,16 @@ void dichotomy_name(int a, int b, string name){    //名字检索用到的二分法
 				dichotomy_name(frist, last, name);
 				return;
 			}
-			system("pause");
 		}  //while
+
 	}//if
-	else
-		cout << "no such file" << endl;
+	else{
+		 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+         cout << "not found!" << endl;
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);}
 }
 
-void dichotomy_date(int a, int b, string date){    //名字检索用到的二分法
+void dichotomy_date(int a, int b, string date){    //日期检索用到的二分法
 
 	int frist = a;
 	int last = b;
@@ -114,9 +116,13 @@ void dichotomy_date(int a, int b, string date){    //名字检索用到的二分法
 			}
 		}  //while
 	}//if
-	else
-		cout << "no such file" << endl;
+	else{
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+         cout << "not found!" << endl;
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+	}
 }
+
 bool Less1(INAMEindex s1, INAMEindex s2)
 {
 	return s1.name < s2.name;
@@ -126,8 +132,6 @@ bool Less2(IDATEindex s1, IDATEindex s2)
 {
 	return s1.date < s2.date;
 }
-
-
 
 void search_file_name(string in) {        //按名字检索
 	sort(inameindex.begin(), inameindex.end(), Less1);
@@ -139,8 +143,9 @@ void search_file_name(string in) {        //按名字检索
 	dichotomy_name(a, b, in);
 	for (unsigned int i = 0; i < catalog.size(); i++){
 		if (catalog[i].info.name == in && catalog[i].addr.flag == 1){
-			cout << catalog[i].info.name << " " << catalog[i].info.last_edit_time << " ";
+			cout << catalog[i].info.name<<" ";
 			transform_path(catalog[i].info.path);
+			cout << " "<<catalog[i].info.ftype<<" " << catalog[i].info.last_edit_time <<endl;
 		}
 	}
 
@@ -164,6 +169,27 @@ void search_file_date(string in) {
 
 }
 
+void search_file_type(string in) {
+	//sort(itypeindex.begin(), itypeindex.end(), Less1);
+	// for(int i=0;i<2;i++){
+	//   cout<<idateindex[i].date<<endl;
+	// } // 输出索引，调试时用的
+    int sign =1;
+	for (unsigned int i = 0; i < catalog.size(); i++){
+		if (catalog[i].info.ftype == in ){
+            sign=0;
+			cout << catalog[i].info.name << " "<<catalog[i].info.ftype<<" " << catalog[i].info.last_edit_time << " ";
+			transform_path(catalog[i].info.path);
+			cout<<endl;
+		}
+	}
+	if(sign==1){
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+        cout << "not found!" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+	}
+
+}
 
 void search_file(string command){
 	stringstream command_stream(command);
@@ -177,6 +203,9 @@ void search_file(string command){
 	}
 	if (in == "-name"){
 		search_file_name(key);
+	}
+	if (in == "-type"){
+        search_file_type(key);
 	}
 }
 

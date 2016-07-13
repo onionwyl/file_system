@@ -29,6 +29,8 @@ void save();
 void copy(string command);
 void move(string command);
 void rename(string name);
+void backstage();
+
 int main()
 {
 	User new_user;                       //初始化用户信息
@@ -44,8 +46,10 @@ int main()
 	char t;
 	init();
 	save();
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
 	cout << "welcome to system" << endl;
 	cout << "please login" << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 	while (1)
 	{
 		username = "";
@@ -66,14 +70,21 @@ int main()
 			username_id = user[0].id;
 			break;
 		}
-		else
+		else{
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 			cout << endl << "username or password error" << endl;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+        }
 	}
 	system("cls");
 	getline(cin, command);
 	while (1)
 	{
-		cout << username << "@filesystem ";
+	    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_BLUE);
+		cout << username;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN|FOREGROUND_RED);
+		cout << "@filesystem ";
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 		if (path.size() == 1)
 			cout << "/";
 		else
@@ -137,9 +148,14 @@ int main()
 		{
 			move(command);
 		}
+		else if (subcommand == "bs"){
+            backstage();
+		}
 		else
 		{
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 			cout << "command not found" << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 		}
 		cout << endl;
 		save();

@@ -12,6 +12,8 @@
 #include<algorithm>
 #include<tchar.h>
 #include<cstdlib>
+#include<iomanip>
+#include<windowsx.h>
 
 using namespace std;
 
@@ -59,6 +61,7 @@ typedef struct{		//内存i节点
 	information info;
 	vector<int> user;
 	int         id;//对应磁盘i节点的id
+	string      open_time;
 }i_node_memory;
 
 typedef struct{		//磁盘块

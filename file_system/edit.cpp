@@ -49,6 +49,8 @@ void edit(string command){
 	command_stream >> command1;
 	command_stream >> name;
 
+
+    if(find_block(name)>=0){
 	string a = disk[disk_index[index[find_block(name)].info.block].block[0]].content;
 	ofstream fout;
 	fout.open("temp.txt");
@@ -70,6 +72,11 @@ void edit(string command){
 	time_t t = time(0);
 	strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
 	index[find_block(name)].info.last_edit_time = date;  //修改最后编辑时间
-
+    }
+    else{
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+         cout << "file not found" << endl;
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+    }
 }
 

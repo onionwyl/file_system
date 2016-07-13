@@ -5,6 +5,7 @@ extern int username_id;
 extern i_node index[128];
 extern disk_block disk[10240];
 extern vector<disk_Index> disk_index;
+extern vector<cataLog> catalog;
 
 int find_block(string name);
 
@@ -13,7 +14,7 @@ void open_file(string command){
 	string command1, name;
 	command_stream >> command1;
 	command_stream >> name;
-
+    if(find_block(name)>=0){
     i_node_memory new_i_node_mem;                      //建立日期索引
     new_i_node_mem.info.block=index[find_block(name)].info.block;
     new_i_node_mem.info.create_time=index[find_block(name)].info.create_time;
@@ -29,13 +30,30 @@ void open_file(string command){
     new_i_node_mem.info.writeable=index[find_block(name)].info.writeable;
     new_i_node_mem.user.push_back(username_id);
     new_i_node_mem.id=find_block(name);
+
+    char date[255];
+    time_t t = time(0);
+    strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
+    new_i_node_mem.open_time=date;
+
     i_node_mem.push_back(new_i_node_mem);
 
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);//设置蓝色
-    cout<<"=========================================================="<<endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY);
+    cout<<"                                                                                "<<endl;
+    HANDLE hCON=GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hCON,(7%16)|(0%16*16));
     cout<<disk[disk_index[index[find_block(name)].info.block].block[0] ].content<<endl;
-    cout<<"=========================================================="<<endl;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);//还原为原色
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY);
+    cout<<"                                                                                "<<endl;
+     HANDLE bCON=GetStdHandle(STD_OUTPUT_HANDLE);
+     SetConsoleTextAttribute(bCON,(7%16)|(0%16*16));
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);//还原为原色}
+     }
+    else{
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+        cout << "not found!" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
+    }
 }
 
 void close_file(string command){
@@ -43,12 +61,41 @@ void close_file(string command){
 	 string command1, name;
 	 command_stream >> command1;
 	 command_stream >> name;
+	 if(find_block(name)>=0){
 	 for(unsigned int i=0;i<i_node_mem.size();i++){
         if(i_node_mem[i].id==find_block(name)){
         std::vector<i_node_memory>::iterator it = i_node_mem.begin()+i;
         i_node_mem.erase(it);
-        cout<<command<<" is closed!"<<endl;
+        cout<<name<<" is closed!"<<endl;
         }
+	 }}
+	 else{
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+        cout << "not found!" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 	 }
 
+}
+
+void backstage(){
+    if(i_node_mem.size()>0){
+     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_INTENSITY);
+     cout.setf(ios::left);
+     cout<<setw(10)<<"name"<<setw(10)<<"type"<<setw(20)<<"open time"<<setw(20)<<"path"<<endl;
+     HANDLE hCON=GetStdHandle(STD_OUTPUT_HANDLE);
+     SetConsoleTextAttribute(hCON,(7%16)|(0%16*16));
+
+     for(unsigned int i=0;i<i_node_mem.size();i++){
+         cout.setf(ios::left);
+         cout<<setw(10)<<i_node_mem[i].info.name<<setw(10)<<i_node_mem[i].info.ftype<<setw(10)<<i_node_mem[i].open_time;
+         for (unsigned j = 1; j< i_node_mem[i].info.path.size(); j++){
+	       	cout << catalog[i_node_mem[i].info.path[j]].info.name << "/";
+	       }
+         cout<<endl;
+       }
+    }//if
+    else{
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+         cout << "no file open" << endl;
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);}
 }
