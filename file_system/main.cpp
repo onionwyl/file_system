@@ -28,6 +28,7 @@ void close_file(string command);
 void save();
 void copy(string command);
 void move(string command);
+void rename(string name);
 int main()
 {
 	User new_user;                       //初始化用户信息

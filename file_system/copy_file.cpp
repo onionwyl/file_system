@@ -1,5 +1,5 @@
 #include"header.h"
-
+#include <limits.h>
 extern vector<cataLog> catalog;
 extern vector<int> path;
 extern i_node index[128];
@@ -9,9 +9,10 @@ int ialloc();
 extern int free_i;
 vector<string> split(string str, string pattern);
 int check_folder(int tmp_path_id, string folder);
-
+int pre_file_id;
 int check_file(string fname, int path);
 child_catalog child_file;
+void rename(string name);
 void copy(string command)
 {
 	stringstream command_stream(command);
@@ -24,7 +25,7 @@ void copy(string command)
 	vector<string> subpath;
 	
 	int tmp_path;
-	int pre_file_id;
+
 	//查询原来的name是否存在
 	pre_file_id = check_file(name, path.back());
 	if (pre_file_id == 0)		//b
@@ -164,14 +165,13 @@ void move(string command)
 	cataLog new_catalog;
 	new_catalog.id = catalog.size();
 	child_file.id = new_catalog.id;
-	cout << "Do you want rename file " << name <<"? Y or N"<< endl;
+	/*cout << "Do you want rename file " << name <<"? Y or N"<< endl;
 	char rename;
 	cin >> rename;
-	if (rename == 'Y')
-	{
-		
+	/*if (rename == 'Y')
+	/*{	
 		string newname;
-		cout << "new name is:"<<endl;
+		/*cout << "new name is:"<<endl;
 		cin >> newname;
 		if (check_file(newname, path.back()) != 0)
 		{
@@ -180,8 +180,33 @@ void move(string command)
 		child_file.name = newname;
 		catalog[pre_file_id].info.name = newname;
 		index[free_i].info.name = newname;
+		
+		rename(newname);
+	}
+	else if (rename == 'N')
+		child_file.name = name;*/
+	rename(name);
+	catalog[new_path.back()].addr.c_catalog.push_back(child_file);
+}
+void rename(string name)
+{
+	cout << "Do you want rename file " << name << "? Y or N" << endl;
+	string rename;
+	getline(cin, rename);
+	if (rename == "Y")
+	{
+		//cin.ignore(numeric_limits <streamsize> ::max(), '\n');
+	cout << "new name is:"<<endl;
+		string newname;
+		getline(cin, newname);
+		if (check_file(newname, path.back()) != 0)
+		{
+		return;
+		}
+		child_file.name = newname;
+		catalog[pre_file_id].info.name = newname;
+		index[free_i].info.name = newname;
 	}
 	else 
 		child_file.name = name;
-	catalog[new_path.back()].addr.c_catalog.push_back(child_file);
 }
