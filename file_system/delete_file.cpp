@@ -8,6 +8,10 @@ void ifree(int block);
 void free_disk_block(int inode);
 extern vector<int> disk_stack;
 extern disk_block disk[10240];
+extern vector<INAMEindex> inameindex;   //i节点索引
+extern vector<IDATEindex> idateindex;
+extern vector<ITYPEindex> itypeindex;
+
 void delete_file(string command){
 	stringstream command_stream(command);
 	string command1, name;
@@ -48,6 +52,28 @@ void delete_file(string command){
 			vector<child_catalog>::iterator it1;
 			it1 = catalog[path.back()].addr.c_catalog.begin() + i;
 			catalog[path.back()].addr.c_catalog.erase(it1);
+			//删除文件名索引
+			for(unsigned i=0;i<inameindex.size();i++){
+                if(inameindex[i].id == catalog[file.id].addr.i_node){
+                     std::vector<INAMEindex>::iterator it2 = inameindex.begin()+i;
+                     inameindex.erase(it2);
+                }
+			}
+			//删除日期索引
+			for(unsigned i=0;i<idateindex.size();i++){
+                if(idateindex[i].id==catalog[file.id].addr.i_node){
+                     std::vector<IDATEindex>::iterator it3 = idateindex.begin()+i;
+                     idateindex.erase(it3);
+                }
+			}
+			//删除文件名索引
+			for(unsigned i=0;i<itypeindex.size();i++){
+                if(itypeindex[i].id==catalog[file.id].addr.i_node){
+                     std::vector<ITYPEindex>::iterator it3 = itypeindex.begin()+i;
+                     itypeindex.erase(it3);
+                }
+			}
+
 			break;
 		}
 		i++;

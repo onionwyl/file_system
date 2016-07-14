@@ -39,12 +39,14 @@ void dichotomy_name(int a, int b, string name){    //名字检索用到的二分法
 						temp = temp + 1;
 					}
 				}
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
 				for (unsigned int i = 0; i<answer.size(); i++){  //输出结果
 					cout << inameindex[answer[i]].name << " ";
 					transform_path(index[inameindex[i].id].info.path);
 					cout << " " <<index[inameindex[i].id].info.ftype<<" "<<index[inameindex[i].id].info.last_edit_time << " ";
 					cout << endl;
 				}
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 				return;
 			}
 
@@ -63,7 +65,7 @@ void dichotomy_name(int a, int b, string name){    //名字检索用到的二分法
 	}//if
 	else{
 		 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-         cout << "not found!" << endl;
+         cout << "file "<<name<<" not exists"<< endl;
          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);}
 }
 
@@ -94,13 +96,13 @@ void dichotomy_date(int a, int b, string date){    //日期检索用到的二分法
 						temp = temp + 1;
 					}
 				}
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
 				for (unsigned int i = 0; i < answer.size(); i++){  //输出结果
-
 					cout << index[idateindex[i].id].info.name << " " << index[idateindex[i].id].info.last_edit_time << " ";
 					transform_path(index[idateindex[i].id].info.path);
-
 					cout << endl;
 				}
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 				return;
 			}
 
@@ -118,7 +120,7 @@ void dichotomy_date(int a, int b, string date){    //日期检索用到的二分法
 	}//if
 	else{
          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-         cout << "not found!" << endl;
+          cout << "file edited on "<<date<<" not exists"<< endl;
          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 	}
 }
@@ -138,35 +140,53 @@ void search_file_name(string in) {        //按名字检索
 	/* for(int i=0;i<2;i++){
 		 cout<<inameindex[i].name<<endl;
 		 }*/ // 输出索引，调试时用的
+    int sign=0;
 	int a = 0;
 	int b = inameindex.size() - 1;
 	dichotomy_name(a, b, in);
-	for (unsigned int i = 0; i < catalog.size(); i++){
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
+	for (unsigned int i = 1; i < catalog.size(); i++){
 		if (catalog[i].info.name == in && catalog[i].addr.flag == 1){
+            sign =1;
 			cout << catalog[i].info.name<<" ";
 			transform_path(catalog[i].info.path);
 			cout << " "<<catalog[i].info.ftype<<" " << catalog[i].info.last_edit_time <<endl;
 		}
 	}
-
+	 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
+	if(sign==0){
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+         cout << "folder "<<in<<" not exists"<< endl;
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
+         }
 }
+
+
 
 void search_file_date(string in) {
 	sort(idateindex.begin(), idateindex.end(), Less2);
 	// for(int i=0;i<2;i++){
 	//   cout<<idateindex[i].date<<endl;
 	// } // 输出索引，调试时用的
-
+    int sign=0;
 	int a = 0;
 	int b = idateindex.size() - 1;
 	dichotomy_date(a, b, in);
-	for (unsigned int i = 0; i < catalog.size(); i++){
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
+	for (unsigned int i = 1; i < catalog.size(); i++){
 		if (catalog[i].info.last_edit_time.substr(0, 10) == in && catalog[i].addr.flag == 1){
+            sign =1;
 			cout << catalog[i].info.name << " " << catalog[i].info.last_edit_time << " ";
 			transform_path(catalog[i].info.path);
+			cout<<endl;
 		}
 	}
-
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
+	if(sign == 0){
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
+         cout << "folder edited on "<<in<<" not exists"<< endl;
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
+	}
 }
 
 void search_file_type(string in) {
@@ -175,14 +195,19 @@ void search_file_type(string in) {
 	//   cout<<idateindex[i].date<<endl;
 	// } // 输出索引，调试时用的
     int sign =1;
-	for (unsigned int i = 0; i < catalog.size(); i++){
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
+	for (unsigned int i = 1; i < catalog.size(); i++){
 		if (catalog[i].info.ftype == in ){
+            if(in!="folder")
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
             sign=0;
 			cout << catalog[i].info.name << " "<<catalog[i].info.ftype<<" " << catalog[i].info.last_edit_time << " ";
 			transform_path(catalog[i].info.path);
 			cout<<endl;
 		}
 	}
+	 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
+
 	if(sign==1){
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
         cout << "not found!" << endl;
