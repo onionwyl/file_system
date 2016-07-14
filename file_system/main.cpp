@@ -6,11 +6,13 @@ i_node index[128];
 vector<i_node_memory> i_node_mem;
 vector<cataLog> catalog;
 vector<disk_Index> disk_index;
+vector<int>disk_index_free;
 vector<INAMEindex> inameindex;   //i节点索引
 vector<IDATEindex> idateindex;
 vector<ITYPEindex> itypeindex;
 vector<int> path;
 vector<User> user;
+vector<int> catalog_free;
 int username_id;
 int free_i;						//空闲i节点号
 void init();
@@ -32,6 +34,7 @@ void rename(string name);
 void backstage();
 void l();
 void info();
+void format();
 
 int main()
 {
@@ -158,7 +161,13 @@ int main()
             l();
 		}
 		else if (subcommand == "info"){
-            info();
+			info();
+		}
+		else if (subcommand == "format")
+		{
+			remove("disk.txt");
+			remove("diskdata.txt");
+			init();
 		}
 		else
 		{

@@ -1,6 +1,7 @@
 #include"header.h"
 
 extern vector<int> path;
+extern vector<int> catalog_free;
 extern vector<cataLog> catalog;
 vector< string> split(string str, string pattern);
 
@@ -44,10 +45,21 @@ void create_folder(string command)
 	new_information.path = path;
 	new_address.flag = 1;
 	new_address.i_node = -1;
-	new_catalog.id = catalog.size();
-	new_catalog.addr = new_address;
-	new_catalog.info = new_information;
-	catalog.push_back(new_catalog);
+	if (catalog_free.size() == 0)
+	{
+		new_catalog.id = catalog.size();
+		new_catalog.addr = new_address;
+		new_catalog.info = new_information;
+		catalog.push_back(new_catalog);
+	}
+	else
+	{
+		new_catalog.id = catalog_free.back();
+		new_catalog.addr = new_address;
+		new_catalog.info = new_information;
+		catalog[catalog_free.back()] = new_catalog;
+		catalog_free.pop_back();
+	}
 
 	new_child.name = folder_name;
 	new_child.id = new_catalog.id;

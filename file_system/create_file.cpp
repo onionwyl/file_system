@@ -1,9 +1,11 @@
 #include "header.h"
 
+extern vector<int> catalog_free;
 extern vector<cataLog> catalog;
 extern vector<int> disk_stack;		//空闲磁盘块
 extern i_node index[128];
 extern vector<int> path;
+extern vector<int>disk_index_free;
 extern vector<disk_Index> disk_index;
 extern vector<INAMEindex> inameindex;   //i节点索引
 extern vector<IDATEindex> idateindex;
@@ -126,7 +128,10 @@ void create(string command)
 		//cout << file_info.ftype << endl;
 
 		file_info.path = path;
-		file_info.block = disk_index.size();
+		if (disk_index_free.size() == 0)
+			file_info.block = disk_index.size();
+		else
+			file_info.block = disk_index_free.back();
 		index[free_i].info = file_info;
 
 		INAMEindex new_inameindex;                       //建立文件名索引
@@ -145,15 +150,33 @@ void create(string command)
 		itypeindex.push_back(new_itypeindex);
 
 		cataLog new_catalog;
-		new_catalog.id = catalog.size();
-		new_catalog.info = file_info;
-		new_catalog.addr.flag = 0;
-		new_catalog.addr.i_node = free_i;
-		catalog.push_back(new_catalog);
+		if (catalog_free.size() != 0)
+		{
+			new_catalog.id = catalog_free.size();
+			new_catalog.info = file_info;
+			new_catalog.addr.flag = 0;
+			new_catalog.addr.i_node = free_i;
+			catalog[catalog_free.back()] = new_catalog;
+			catalog_free.pop_back();
+		}
+		else
+		{
+			new_catalog.id = catalog.size();
+			new_catalog.info = file_info;
+			new_catalog.addr.flag = 0;
+			new_catalog.addr.i_node = free_i;
+			catalog.push_back(new_catalog);
+		}
 		child_file.id = new_catalog.id;
 		child_file.name = name;
 		catalog[path.back()].addr.c_catalog.push_back(child_file);
-		disk_index.push_back(new_disk_index);		//磁盘索引内容增加
+		if (disk_index_free.size() == 0)
+			disk_index.push_back(new_disk_index);		//磁盘索引内容增加
+		else
+		{
+			disk_index[disk_index_free.back()] = new_disk_index;
+			disk_index_free.pop_back();
+		}
 
 
 

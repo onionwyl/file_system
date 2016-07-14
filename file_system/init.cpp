@@ -5,7 +5,9 @@ extern vector<int> disk_stack;
 extern disk_block disk[10240];
 extern i_node index[128];
 extern vector<i_node_memory> i_node_mem;
+extern vector<int>catalog_free;
 extern vector<cataLog> catalog;
+extern vector<int>disk_index_free;
 extern vector<disk_Index> disk_index;
 extern vector<INAMEindex> inameindex;   //i½ÚµãË÷Òý
 extern vector<IDATEindex> idateindex;
@@ -18,6 +20,19 @@ void init()
 	f.open("disk.txt", ios::in);
 	if (!f)
 	{
+		i_stack.clear();
+		disk_stack.clear();
+		i_node_mem.clear();
+		catalog_free.clear();
+		catalog.clear();
+		disk_index_free.clear();
+		disk_index.clear();
+		inameindex.clear();
+		idateindex.clear();
+		itypeindex.clear();
+		itypeindex.clear();
+		path.clear();
+		user.clear();
 		for (int i = 0; i < 10240; i++){
 			disk[i].content = "";
 		}
@@ -132,6 +147,12 @@ void init()
 		f >> size;
 		for (i = 0; i < size; i++)
 		{
+			f >> tmp;
+			catalog_free.push_back(tmp);
+		}
+		f >> size;
+		for (i = 0; i < size; i++)
+		{
 			cataLog new_catalog;
 			child_catalog new_c_catalog;
 			f >> new_catalog.id;
@@ -167,6 +188,12 @@ void init()
 				new_catalog.info.path.push_back(tmp1);
 			}
 			catalog.push_back(new_catalog);
+		}
+		f >> size;
+		for (int i = 0; i < size; i++)
+		{
+			f >> tmp;
+			disk_index_free.push_back(tmp);
 		}
 		f >> size;
 		for (i = 0; i < size; i++)

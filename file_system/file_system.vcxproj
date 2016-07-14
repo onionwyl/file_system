@@ -87,6 +87,7 @@
     <ClCompile Include="open.cpp" />
     <ClCompile Include="save.cpp" />
     <ClCompile Include="search.cpp" />
+    <ClCompile Include="show.cpp" />
     <ClCompile Include="split.cpp" />
   </ItemGroup>
   <ItemGroup>

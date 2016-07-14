@@ -4,7 +4,9 @@ extern vector<int> i_stack;
 extern vector<int> disk_stack;
 extern disk_block disk[10240];
 extern i_node index[128];
+extern vector<int>catalog_free;
 extern vector<cataLog> catalog;
+extern vector<int>disk_index_free;
 extern vector<disk_Index> disk_index;
 extern vector<INAMEindex> inameindex;   //i½ÚµãË÷Òý
 extern vector<IDATEindex> idateindex;
@@ -46,6 +48,12 @@ void save()
 		}
 		f << endl;
 	}
+	f << catalog_free.size() << endl;
+	for (auto tmp : catalog_free)
+	{
+		f << tmp << " ";
+	}
+	f << endl;
 	f << catalog.size() << endl;
 	for (auto tmp : catalog)
 	{
@@ -69,6 +77,12 @@ void save()
 		}
 		f << endl;
 	}
+	f << disk_index_free.size() << endl;
+	for (auto tmp : disk_index_free)
+	{
+		f << tmp << " ";
+	}
+	f << endl;
 	f << disk_index.size() << endl;
 	for (auto tmp : disk_index)
 	{
