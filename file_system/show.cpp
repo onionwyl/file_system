@@ -17,7 +17,7 @@ void l(){
 
     for(unsigned int i=1;i<catalog.size();i++){
         if(compare_arry(catalog[i].info.path,path)){
-         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
          if(catalog[i].info.type==1){
           SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
          }
@@ -41,7 +41,7 @@ void info(){
 
     for(unsigned int i=1;i<catalog.size();i++){
         if(compare_arry(catalog[i].info.path,path)){
-         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
+         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
          if(catalog[i].info.type==1){
           SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
          }

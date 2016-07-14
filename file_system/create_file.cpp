@@ -42,6 +42,8 @@ void create(string command)
 		}
 		//写入文件信息，磁盘i节点信息
 		file_info.name = name;
+
+
 		file_info.type = 0;
 		char date[255];
 		time_t t = time(0);
@@ -78,7 +80,7 @@ void create(string command)
 		disk_Index new_disk_index;					//分配磁盘块
 		new_disk_index.block = allocata(file_info.size);
 		if (new_disk_index.block.size() == 0)
-		{	
+		{
 			return;
 		}
 		if (share == "n")
@@ -212,7 +214,7 @@ int check_file(string fname, int path)
 	{
 		if (fname == file.name && catalog[file.id].info.type == 0)
 		{
-			
+
 			return file.id;
 		}
 	}

@@ -39,7 +39,7 @@ void dichotomy_name(int a, int b, string name){    //名字检索用到的二分法
 						temp = temp + 1;
 					}
 				}
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
 				for (unsigned int i = 0; i<answer.size(); i++){  //输出结果
 					cout << inameindex[answer[i]].name << " ";
 					transform_path(index[inameindex[i].id].info.path);
@@ -96,7 +96,7 @@ void dichotomy_date(int a, int b, string date){    //日期检索用到的二分法
 						temp = temp + 1;
 					}
 				}
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
 				for (unsigned int i = 0; i < answer.size(); i++){  //输出结果
 					cout << index[idateindex[i].id].info.name << " " << index[idateindex[i].id].info.last_edit_time << " ";
 					transform_path(index[idateindex[i].id].info.path);
@@ -199,7 +199,7 @@ void search_file_type(string in) {
 	for (unsigned int i = 1; i < catalog.size(); i++){
 		if (catalog[i].info.ftype == in ){
             if(in!="folder")
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
             sign=0;
 			cout << catalog[i].info.name << " "<<catalog[i].info.ftype<<" " << catalog[i].info.last_edit_time << " ";
 			transform_path(catalog[i].info.path);

@@ -129,10 +129,15 @@ void change_path(string command)
 
 void show_folder(string  command)
 {
+
 	for (auto name : catalog[path.back()].addr.c_catalog)
 	{
+	    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
+	    if(catalog[name.id].info.type == 1)
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
 		cout << name.name << " ";
 	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN|FOREGROUND_BLUE|FOREGROUND_RED);
 	cout << endl;
 }
 

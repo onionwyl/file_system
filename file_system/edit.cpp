@@ -71,7 +71,12 @@ void edit(string command){
 	char date[255];
 	time_t t = time(0);
 	strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
-	index[find_block(name)].info.last_edit_time = date;  //修改最后编辑时间
+	index[find_block(name)].info.last_edit_time = date;
+	for(unsigned int i=0;i<catalog.size();i++)  //修改最后编辑时间
+	{
+	    if(catalog[i].addr.flag==0 && catalog[i].addr.i_node==find_block(name))
+            catalog[i].info.last_edit_time=date;
+	}
     }
     else{
          SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
