@@ -115,19 +115,22 @@ void move(string command)
 			new_path.push_back(0);
 			
 		}
-		tmp_path = 0;
-		subpath = split(old_path, "/");
-		new_path.push_back(0);
-		for (auto p : subpath)
+		else
 		{
-			if (tmp_path = check_folder(tmp_path, p))
+			tmp_path = 0;
+			subpath = split(old_path, "/");
+			new_path.push_back(0);
+			for (auto p : subpath)
 			{
-				new_path.push_back(tmp_path);
-			}
-			else
-			{
-				cout << "no such directory" << endl;
-				return;
+				if (tmp_path = check_folder(tmp_path, p))
+				{
+					new_path.push_back(tmp_path);
+				}
+				else
+				{
+					cout << "no such directory" << endl;
+					return;
+				}
 			}
 		}
 	}
@@ -162,17 +165,22 @@ void move(string command)
 		}
 		i++;
 	}
-	cataLog new_catalog;
-	new_catalog.id = catalog.size();
-	child_file.id = new_catalog.id;
-	/*cout << "Do you want rename file " << name <<"? Y or N"<< endl;
-	char rename;
-	cin >> rename;
-	/*if (rename == 'Y')
-	/*{	
+	child_file.id = pre_file_id;
+	rename(name);
+	catalog[new_path.back()].addr.c_catalog.push_back(child_file);
+}
+void rename(string name)
+{
+	char c;
+	cout << "Do you want rename file " << name << "? Y or N: ";
+	c = _getch();
+	if (c == 'Y' || c == 'y')
+	{
+		//cin.ignore(numeric_limits <streamsize> ::max(), '\n');
+		cout << c << endl;
+		cout << "new name is:"<<endl;
 		string newname;
-		/*cout << "new name is:"<<endl;
-		cin >> newname;
+		getline(cin, newname);
 		if (check_file(newname, path.back()) != 0)
 		{
 			return;
@@ -180,33 +188,10 @@ void move(string command)
 		child_file.name = newname;
 		catalog[pre_file_id].info.name = newname;
 		index[free_i].info.name = newname;
-		
-		rename(newname);
 	}
-	else if (rename == 'N')
-		child_file.name = name;*/
-	rename(name);
-	catalog[new_path.back()].addr.c_catalog.push_back(child_file);
-}
-void rename(string name)
-{
-	cout << "Do you want rename file " << name << "? Y or N" << endl;
-	string rename;
-	getline(cin, rename);
-	if (rename == "Y")
+	else if (c == 'N' || c == 'n' || c == '\r')
 	{
-		//cin.ignore(numeric_limits <streamsize> ::max(), '\n');
-	cout << "new name is:"<<endl;
-		string newname;
-		getline(cin, newname);
-		if (check_file(newname, path.back()) != 0)
-		{
-		return;
-		}
-		child_file.name = newname;
-		catalog[pre_file_id].info.name = newname;
-		index[free_i].info.name = newname;
-	}
-	else 
+		cout << c << endl;
 		child_file.name = name;
+	}
 }

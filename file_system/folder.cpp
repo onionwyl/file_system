@@ -4,6 +4,7 @@ extern vector<int> path;
 extern vector<int> catalog_free;
 extern vector<cataLog> catalog;
 vector< string> split(string str, string pattern);
+extern int username_id;
 
 int check_folder(int tmp_path_id, string folder);
 
@@ -34,7 +35,7 @@ void create_folder(string command)
 	new_information.share = 1;
 	new_information.readable = 1;
 	new_information.writeable = 1;
-	new_information.user = 0;
+	new_information.user = username_id;
 	new_information.size = 0;
 	new_information.block = -1;
 	char date[255];
@@ -132,10 +133,13 @@ void show_folder(string  command)
 
 	for (auto name : catalog[path.back()].addr.c_catalog)
 	{
-	    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
-	    if(catalog[name.id].info.type == 1)
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN);
-		cout << name.name << " ";
+		if (catalog[name.id].info.user == username_id || username_id == 0 || catalog[name.id].info.share == 1)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+			if (catalog[name.id].info.type == 1)
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+			cout << name.name << " ";
+		}
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN|FOREGROUND_BLUE|FOREGROUND_RED);
 	cout << endl;

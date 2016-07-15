@@ -32,7 +32,7 @@ void init()
 		itypeindex.clear();
 		itypeindex.clear();
 		path.clear();
-		user.clear();
+		memset(index, 0, sizeof(index));
 		for (int i = 0; i < 10240; i++){
 			disk[i].content = "";
 		}

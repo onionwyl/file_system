@@ -41,9 +41,10 @@ void save()
 			f << index[i].info.share << " " << index[i].info.readable << " " << index[i].info.writeable << " ";
 			f << index[i].info.size << " " << index[i].info.block << endl;
 			f << index[i].info.path.size() << endl;
-			for (auto tmp : index[i].info.path)
+			int j;
+			for (j = 0; j < index[i].info.path.size(); j++)
 			{
-				f << tmp << " ";
+				f << index[i].info.path[j] << " ";
 			}
 		}
 		f << endl;

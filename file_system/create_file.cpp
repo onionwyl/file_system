@@ -14,6 +14,7 @@ extern vector<int> allocata(int size);
 int check_file(string fname, int path);
 int ialloc();
 extern int free_i;
+extern int username_id;
 
 void create(string command)
 {
@@ -50,7 +51,7 @@ void create(string command)
 		strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
 		file_info.last_edit_time = file_info.create_time = date;
 		//cout << file_info.create_time << endl;
-		file_info.user = 0;
+		file_info.user = username_id;
 		if (size == "")
 		{
 			zhengsize = 512;
@@ -89,7 +90,7 @@ void create(string command)
 			file_info.readable = 0;
 			file_info.writeable = 0;
 		}
-		else if (share == "swr" || share == "srw" || share == "")
+		else if (share == "swr" || share == "srw" || share == "" || share == "sw" || share == "s")
 		{
 			file_info.share = 1;
 			file_info.readable = 1;
@@ -190,7 +191,7 @@ void create(string command)
 vector<int> allocata(int size)
 {
 	vector<int> free_block;
-	unsigned int block_num = (unsigned int)ceil(size / BLOCKSIZ);
+	unsigned int block_num = (unsigned int)ceil(size*1.0 / BLOCKSIZ);
 	if (disk_stack.size() < block_num)
 	{
 		cout << "no more free blocks" << endl;

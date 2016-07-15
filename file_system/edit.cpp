@@ -4,6 +4,7 @@ extern i_node index[128];
 extern disk_block disk[10240];
 extern vector<int> path;
 extern vector<disk_Index> disk_index;
+extern int username_id;
 
 void txt(){
 	SHELLEXECUTEINFO ShellInfo;
@@ -49,39 +50,39 @@ void edit(string command){
 	command_stream >> command1;
 	command_stream >> name;
 
+	int index_id = find_block(name);
+	if (find_block(name) >= 0 && (index[index_id].info.share == 1 && index[index_id].info.writeable == 1 || index[index_id].info.user == username_id || username_id == 0)){
+		string a = disk[disk_index[index[find_block(name)].info.block].block[0]].content;
+		ofstream fout;
+		fout.open("temp.txt");
+		fout << a;
+		fout.close();                                     //将磁盘块内容写入temp.txt
 
-    if(find_block(name)>=0){
-	string a = disk[disk_index[index[find_block(name)].info.block].block[0]].content;
-	ofstream fout;
-	fout.open("temp.txt");
-	fout << a;
-	fout.close();                                     //将磁盘块内容写入temp.txt
+		txt();                                            //调用记事本
 
-	txt();                                            //调用记事本
+		ifstream in("temp.txt", ios::in);
+		istreambuf_iterator<char> beg(in), end;
+		string strdata(beg, end);
+		a = strdata;
+		disk[disk_index[index[find_block(name)].info.block].block[0]].content = a;
+		in.close();                                        //将记事本内容写回磁盘
 
-	ifstream in("temp.txt", ios::in);
-	istreambuf_iterator<char> beg(in), end;
-	string strdata(beg, end);
-	a = strdata;
-	disk[disk_index[index[find_block(name)].info.block].block[0]].content = a;
-	in.close();                                        //将记事本内容写回磁盘
+		remove("temp.txt");                                 //删除临时文件
 
-	remove("temp.txt");                                 //删除临时文件
-
-	char date[255];
-	time_t t = time(0);
-	strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
-	index[find_block(name)].info.last_edit_time = date;
-	for(unsigned int i=0;i<catalog.size();i++)  //修改最后编辑时间
-	{
-	    if(catalog[i].addr.flag==0 && catalog[i].addr.i_node==find_block(name))
-            catalog[i].info.last_edit_time=date;
+		char date[255];
+		time_t t = time(0);
+		strftime(date, 255, "%Y-%m-%d %H:%M:%S", localtime(&t));
+		index[find_block(name)].info.last_edit_time = date;
+		for (unsigned int i = 0; i < catalog.size(); i++)  //修改最后编辑时间
+		{
+			if (catalog[i].addr.flag == 0 && catalog[i].addr.i_node == find_block(name))
+				catalog[i].info.last_edit_time = date;
+		}
 	}
-    }
-    else{
-         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-         cout << "file not found" << endl;
-         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
-    }
+	else{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "file not found or cannot be edited" << endl;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+	}
 }
 

@@ -22,7 +22,8 @@ void open_file(string command){
 	string command1, name;
 	command_stream >> command1;
 	command_stream >> name;
-    if(find_block(name)>=0 && check(name)){
+	int index_id = find_block(name);
+    if(find_block(name)>=0 && check(name) && (index[index_id].info.share == 1 || index[index_id].info.user == username_id || username_id == 0)){
     i_node_memory new_i_node_mem;                      //建立日期索引
     new_i_node_mem.info.block=index[find_block(name)].info.block;
     new_i_node_mem.info.create_time=index[find_block(name)].info.create_time;
@@ -64,7 +65,8 @@ void close_file(string command){
 	 string command1, name;
 	 command_stream >> command1;
 	 command_stream >> name;
-	 if(find_block(name)>=0 && !check(name)){
+	 int index_id = find_block(name);
+	 if (find_block(name) >= 0 && !check(name) && (index[index_id].info.share == 1 || index[index_id].info.user == username_id || username_id == 0)){
 	 for(unsigned int i=0;i<i_node_mem.size();i++){
         if(i_node_mem[i].id==find_block(name)){
         std::vector<i_node_memory>::iterator it = i_node_mem.begin()+i;

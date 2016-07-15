@@ -15,6 +15,7 @@ vector<User> user;
 vector<int> catalog_free;
 int username_id;
 int free_i;						//空闲i节点号
+void load_user();
 void init();
 void create_folder(string command);
 void change_path(string command);
@@ -35,149 +36,185 @@ void backstage();
 void l();
 void info();
 void format();
+void add_user(string command);
+int check_user(string username, string password);
+void delete_user(string command);
+void change_password(string command);
 
 int main()
 {
-	User new_user;                       //初始化用户信息
-	new_user.username = "admin";
-	new_user.password = "admin";
-	user.push_back(new_user);
-
 	string username;
 	string password;
 	string command;
 	string subcommand;
 	string temp_path;
 	char t;
+	load_user();
 	init();
 	save();
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN);
-	cout << "welcome to system" << endl;
-	cout << "please login" << endl;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
 	while (1)
 	{
-		username = "";
-		password = "";
-		cout << "username:";
-		cin >> username;
-		cout << "password:";
-		while ((t = _getch()) != '\r')
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		cout << "welcome to system" << endl;
+		cout << "please login" << endl;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		while (1)
 		{
-			if (t == '\b')
+			username = "";
+			password = "";
+			cout << "username:";
+			cin >> username;
+			cout << "password:";
+			while ((t = _getch()) != '\r')
 			{
-				password = password.substr(0, password.length() - 1);
+				if (t == '\b')
+				{
+					password = password.substr(0, password.length() - 1);
+				}
+				else
+					password += t;
+			}
+			if (check_user(username, password))
+			{
+				break;
+			}
+			else{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+				cout << endl << "username or password error" << endl;
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+			}
+		}
+		system("cls");
+		getline(cin, command);
+		while (1)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE);
+			cout << username;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_RED);
+			cout << "@filesystem ";
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE);
+			if (path.size() == 1)
+				cout << "/";
+			else
+			{
+				for (auto p : path)
+				{
+					if (p == 0)
+						continue;
+					cout << "/" << catalog[p].info.name;
+				}
+			}
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+			cout << endl << ">";
+			getline(cin, command);
+			stringstream command_stream(command);
+			command_stream >> subcommand;
+			if (subcommand == "")
+			{
+
+			}
+			else if (subcommand == "cd")
+			{
+				change_path(command);
+			}
+			else if (subcommand == "ls")
+			{
+				show_folder(command);
+			}
+			else if (subcommand == "create")
+			{
+				create(command);
+			}
+			else if (subcommand == "mkdir")
+			{
+				create_folder(command);
+			}
+			else if (subcommand == "delete")
+			{
+				delete_file(command);
+			}
+			else if (subcommand == "edit")
+			{
+				edit(command);
+			}
+			else if (subcommand == "search")
+			{
+				search_file(command);
+			}
+			else if (subcommand == "open")
+			{
+				open_file(command);
+			}
+			else if (subcommand == "close")
+			{
+				close_file(command);
+			}
+			else if (subcommand == "cp")
+			{
+				copy(command);
+			}
+			else if (subcommand == "mv")
+			{
+				move(command);
+			}
+			else if (subcommand == "bs"){
+				backstage();
+			}
+			else if (subcommand == "l"){
+				l();
+			}
+			else if (subcommand == "info"){
+				info();
+			}
+			else if (subcommand == "format")
+			{
+				char c;
+				cout << "Are you sure you want to format the disk?(y/N)";
+				c = _getch();
+				if (c == 'n' || c == 'N' || c == '\r')
+				{
+					cout << c << endl;
+					continue;
+				}
+				else if (c == 'y' || c == 'Y')
+				{
+					remove("disk.txt");
+					remove("diskdata.txt");
+					init();
+					cout << c << "\nformat complete" << endl;
+				}
+			}
+			else if (subcommand == "useradd")
+			{
+				add_user(command);
+			}
+			else if (subcommand == "userdelete")
+			{
+				delete_user(command);
+			}
+			else if (subcommand == "passwd")
+			{
+				change_password(command);
+			}
+			else if (subcommand == "clear")
+			{
+				system("cls");
+			}
+			else if (subcommand == "exit")
+			{
+				system("cls");
+				break;
 			}
 			else
-				password += t;
-		}
-		if (username == user[0].username && password == user[0].password){   //只有一个用户默认0,多个用户需要遍历
-			username_id = user[0].id;
-			break;
-		}
-		else{
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-			cout << endl << "username or password error" << endl;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
-        }
-	}
-	system("cls");
-	getline(cin, command);
-	while (1)
-	{
-	    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_BLUE);
-		cout << username;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN|FOREGROUND_RED);
-		cout << "@filesystem ";
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
-		if (path.size() == 1)
-			cout << "/";
-		else
-		{
-			for (auto p : path)
 			{
-				if (p == 0)
-					continue;
-				cout << "/" << catalog[p].info.name;
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+				cout << "command not found" << endl;
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 			}
+			cout << endl;
+			save();
+			command = "";
+			subcommand = "";
 		}
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
-		cout << endl << ">";
-		getline(cin, command);
-		stringstream command_stream(command);
-		command_stream >> subcommand;
-		if (subcommand == "")
-		{
-
-		}
-		else if (subcommand == "cd")
-		{
-			change_path(command);
-		}
-		else if (subcommand == "ls")
-		{
-			show_folder(command);
-		}
-		else if (subcommand == "create")
-		{
-			create(command);
-		}
-		else if (subcommand == "mkdir")
-		{
-			create_folder(command);
-		}
-		else if (subcommand == "delete")
-		{
-			delete_file(command);
-		}
-		else if (subcommand == "edit")
-		{
-			edit(command);
-		}
-		else if (subcommand == "search")
-		{
-			search_file(command);
-		}
-		else if (subcommand == "open")
-		{
-			open_file(command);
-		}
-		else if (subcommand == "close")
-		{
-			close_file(command);
-		}
-		else if (subcommand == "cp")
-		{
-			copy(command);
-		}
-		else if (subcommand == "mv")
-		{
-			move(command);
-		}
-		else if (subcommand == "bs"){
-            backstage();
-		}
-		else if (subcommand == "l"){
-            l();
-		}
-		else if (subcommand == "info"){
-			info();
-		}
-		else if (subcommand == "format")
-		{
-			remove("disk.txt");
-			remove("diskdata.txt");
-			init();
-		}
-		else
-		{
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
-			cout << "command not found" << endl;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_RED);
-		}
-		cout << endl;
-		save();
-		command = "";
-		subcommand = "";
 	}
 }

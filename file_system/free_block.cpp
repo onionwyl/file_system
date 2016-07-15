@@ -16,7 +16,7 @@ int ialloc()	//·ÖÅä¿ÕÏĞi½Úµã
 	}
 	else
 	{
-		free_i = i_stack[i_stack.back()];
+		free_i = i_stack.back();
 		i_stack.pop_back();
 		return free_i;
 	}

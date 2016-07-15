@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="add_user.cpp" />
     <ClCompile Include="copy_file.cpp" />
     <ClCompile Include="create_file.cpp" />
     <ClCompile Include="delete_file.cpp" />
@@ -84,6 +85,7 @@
     <ClCompile Include="free_block.cpp" />
     <ClCompile Include="init.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="md5.cpp" />
     <ClCompile Include="open.cpp" />
     <ClCompile Include="save.cpp" />
     <ClCompile Include="search.cpp" />
@@ -92,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h" />
+    <ClInclude Include="md5.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
